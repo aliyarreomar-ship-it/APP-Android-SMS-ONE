@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SMS Reader Pro</string>
+    <string name="dashboard">Guudmar</string>
+    <string name="transactions">Xisaabaadka</string>
+    <string name="review">Dib-u-eegis</string>
+    <string name="analytics">Falanqayn</string>
+    <string name="reports">Warbixin</string>
+    <string name="scanner">Scanner</string>
+    <string name="settings">Habayn</string>
+    <string name="net_balance">Haraaga Guud</string>
+    <string name="income">Dakhli</string>
+    <string name="expense">Kharash</string>
+    <string name="save">Keydi</string>
+    <string name="cancel">Ka noqo</string>
+    <string name="delete">Tirtir</string>
+</resources>

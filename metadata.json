@@ -1,6 +1,6 @@
 {
   "name": "SMS Reader Pro",
-  "description": "Private personal web app to read and track Somali mobile-money SMS transactions.",
+  "description": "Android application to automatically read, parse, and track Somali mobile money SMS transactions (EVC Plus, E-Dahab, Jeeb).",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

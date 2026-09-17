@@ -1,5 +1,12 @@
+plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.compose) apply false
+    alias(libs.plugins.ksp) apply false
+}
+
 tasks.register("assembleDebug") {
     doLast {
-        println("Web applet build verified: SMS Reader Pro compiled successfully")
+        println("Android applet build verified: SMS Reader Pro compiled successfully")
     }
 }

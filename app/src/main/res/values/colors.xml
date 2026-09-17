@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">#059669</color>
+    <color name="on_primary">#FFFFFF</color>
+    <color name="primary_container">#D1FAE5</color>
+    <color name="on_primary_container">#064E3B</color>
+    <color name="secondary">#0F172A</color>
+    <color name="background">#F8FAFC</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="income_green">#059669</color>
+    <color name="expense_red">#DC2626</color>
+    <color name="evc_amber">#D97706</color>
+</resources>
