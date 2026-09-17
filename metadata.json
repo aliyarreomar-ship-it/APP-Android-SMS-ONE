@@ -1,6 +1,6 @@
 {
-  "name": "SMS Reader Pro",
-  "description": "Android application to automatically read, parse, and track Somali mobile money SMS transactions (EVC Plus, E-Dahab, Jeeb).",
+  "name": "Fariin Aqriye",
+  "description": "App-ka Fariin Aqriye - Android Native App si toos ah u aqriya xisaabaadka SMS-ka Mobile Money (EVC Plus, E-Dahab, Jeeb, Sahal) lehna diiwaangelin degdeg ah iyo warbixino maaliyadeed.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

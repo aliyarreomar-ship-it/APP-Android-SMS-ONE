@@ -15,6 +15,9 @@ interface TransactionDao {
     @Query("SELECT * FROM transactions WHERE isVerified = 0 ORDER BY transactionDate DESC")
     fun getUnverifiedTransactions(): Flow<List<TransactionEntity>>
 
+    @Query("SELECT * FROM transactions WHERE id = :id LIMIT 1")
+    suspend fun findById(id: Long): TransactionEntity?
+
     @Query("SELECT * FROM transactions WHERE referenceId = :ref LIMIT 1")
     suspend fun findByReference(ref: String): TransactionEntity?
 

@@ -6,12 +6,18 @@ import com.example.smsreaderpro.data.model.Transaction
 import com.example.smsreaderpro.data.model.TransactionType
 import com.example.smsreaderpro.data.parser.SmsParserEngine
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.map
 
 class TransactionRepository(
     private val dao: TransactionDao,
     private val parserEngine: SmsParserEngine = SmsParserEngine.defaultEngine
 ) {
+    private val _incomingTransactionEvents = MutableSharedFlow<Transaction>(extraBufferCapacity = 10)
+    val incomingTransactionEvents: SharedFlow<Transaction> = _incomingTransactionEvents.asSharedFlow()
+
     val allTransactions: Flow<List<Transaction>> = dao.getAllTransactions().map { entities ->
         entities.map { it.toDomain() }
     }
@@ -147,7 +153,13 @@ class TransactionRepository(
         )
 
         val generatedId = dao.insertTransaction(TransactionEntity.fromDomain(transaction))
-        return transaction.copy(id = generatedId)
+        val saved = transaction.copy(id = generatedId)
+        _incomingTransactionEvents.tryEmit(saved)
+        return saved
+    }
+
+    suspend fun getTransactionById(id: Long): Transaction? {
+        return dao.findById(id)?.toDomain()
     }
 
     suspend fun verifyTransaction(id: Long) {

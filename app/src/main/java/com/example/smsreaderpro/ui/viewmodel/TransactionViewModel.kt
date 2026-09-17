@@ -54,6 +54,23 @@ class TransactionViewModel(
     private val _toastMessage = MutableStateFlow<String?>(null)
     val toastMessage: StateFlow<String?> = _toastMessage.asStateFlow()
 
+    init {
+        viewModelScope.launch {
+            repository.incomingTransactionEvents.collect { tx ->
+                _pendingPopupTx.value = tx
+            }
+        }
+    }
+
+    fun openTransactionById(id: Long) {
+        viewModelScope.launch {
+            val tx = repository.getTransactionById(id)
+            if (tx != null) {
+                _pendingPopupTx.value = tx
+            }
+        }
+    }
+
     fun showToast(msg: String) {
         _toastMessage.value = msg
     }

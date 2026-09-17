@@ -1,7 +1,9 @@
 package com.example.smsreaderpro
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -60,10 +62,24 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        handleIntent(intent)
         setContent {
             SMSReaderProTheme {
                 MainAppScreen(viewModel = viewModel)
             }
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent?) {
+        val txId = intent?.getLongExtra("EXTRA_TRANSACTION_ID", -1L) ?: -1L
+        if (txId != -1L) {
+            viewModel.openTransactionById(txId)
         }
     }
 }
@@ -82,16 +98,27 @@ fun MainAppScreen(viewModel: TransactionViewModel) {
     val toastMsg by viewModel.toastMessage.collectAsState()
 
     val permissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        if (isGranted) {
-            Toast.makeText(context, "Oggolaanshaha SMS waa la siiyay!", Toast.LENGTH_SHORT).show()
+        contract = ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        val smsGranted = permissions[Manifest.permission.RECEIVE_SMS] == true
+        if (smsGranted) {
+            Toast.makeText(context, "Fariin Aqriye: Oggolaanshaha SMS waa la siiyay!", Toast.LENGTH_SHORT).show()
         }
     }
 
     LaunchedEffect(Unit) {
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.RECEIVE_SMS) != PackageManager.PERMISSION_GRANTED) {
-            permissionLauncher.launch(Manifest.permission.RECEIVE_SMS)
+        val neededPermissions = mutableListOf(
+            Manifest.permission.RECEIVE_SMS,
+            Manifest.permission.READ_SMS
+        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            neededPermissions.add(Manifest.permission.POST_NOTIFICATIONS)
+        }
+        val missing = neededPermissions.filter {
+            ContextCompat.checkSelfPermission(context, it) != PackageManager.PERMISSION_GRANTED
+        }
+        if (missing.isNotEmpty()) {
+            permissionLauncher.launch(missing.toTypedArray())
         }
     }
 
