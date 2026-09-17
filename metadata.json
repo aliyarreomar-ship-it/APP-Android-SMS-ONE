@@ -1,0 +1,6 @@
+{
+  "name": "SMS Reader Pro",
+  "description": "Private personal Android app to read and track Somali mobile-money SMS transactions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
